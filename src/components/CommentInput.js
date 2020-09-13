@@ -7,13 +7,14 @@ class CommentInput extends Component {
         onUserNameInputBlur: PropTypes.func,
         username: PropTypes.any
     }
-
+    static defaultProps = {
+        username: ''
+    }
     constructor(props) {
         super(props)
         this.state = {
             username: props.username,
             content: '',
-            createdTime: +Date.now()
         }
     }
 
@@ -39,8 +40,11 @@ class CommentInput extends Component {
 
     handleSubmit() {
         if(this.props.onSubmit){
-            const {username, content, createdTime} = this.state
-            this.props.onSubmit({username, content, createdTime})
+            this.props.onSubmit({
+                username: this.state.username, 
+                content: this.state.content, 
+                createdTime: +new Date()
+            })
         }
         this.setState({
             content: ''
